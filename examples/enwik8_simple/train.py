@@ -12,9 +12,9 @@ from torch.utils.data import DataLoader, Dataset
 
 # constants
 
-NUM_BATCHES = int(1e2)
-BATCH_SIZE = 2
-GRADIENT_ACCUMULATE_EVERY = 4
+NUM_BATCHES = int(1e3)
+BATCH_SIZE = 16
+GRADIENT_ACCUMULATE_EVERY = 1
 LEARNING_RATE = 1e-4
 VALIDATE_EVERY  = 10
 GENERATE_EVERY  = 50
@@ -99,13 +99,13 @@ for i in tqdm.tqdm(range(NUM_BATCHES), mininterval=10., desc='training'):
     optim.step()
     optim.zero_grad()
 
-    if i % VALIDATE_EVERY == 0:
+    if i+1 % VALIDATE_EVERY == 0:
         model.eval()
         with torch.no_grad():
             loss = model(next(val_loader), return_loss = True)
             print(f'validation loss: {loss.item()}')
 
-    if i % GENERATE_EVERY == 0:
+    if i+1 % GENERATE_EVERY == 0:
         model.eval()
         inp = random.choice(val_dataset)[:-1]
         prime = decode_tokens(inp)
