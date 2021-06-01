@@ -12,12 +12,12 @@ from torch.utils.data import DataLoader, Dataset
 
 # constants
 
-NUM_BATCHES = int(1e3)
+NUM_BATCHES = int(2e2)
 BATCH_SIZE = 8
 GRADIENT_ACCUMULATE_EVERY = 1
 LEARNING_RATE = 1e-4
 VALIDATE_EVERY  = 10
-GENERATE_EVERY  = 50
+GENERATE_EVERY  = 10
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
 
