@@ -17,7 +17,7 @@ NUM_BATCHES = int(2e1)
 BATCH_SIZE = 8
 GRADIENT_ACCUMULATE_EVERY = 1
 LEARNING_RATE = 1e-4
-VALIDATE_EVERY  = 10
+VALIDATE_EVERY  = 2
 GENERATE_EVERY  = 10
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
@@ -121,3 +121,4 @@ for i in tqdm.tqdm(range(NUM_BATCHES), mininterval=10., desc='training'):
         sample = model.generate(inp, GENERATE_LENGTH)
         output_str = decode_tokens(sample)
         print(output_str)
+save_plot(loss_list)
