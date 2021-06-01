@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader, Dataset
 # constants
 
 NUM_BATCHES = int(1e3)
-BATCH_SIZE = 32
+BATCH_SIZE = 8
 GRADIENT_ACCUMULATE_EVERY = 4
 LEARNING_RATE = 1e-4
 VALIDATE_EVERY  = 100
