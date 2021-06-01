@@ -10,7 +10,8 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, Dataset
 import matplotlib.pyplot as plt
-
+import datetime
+timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
 NUM_BATCHES = int(2e1)
@@ -39,7 +40,7 @@ def save_plot(list):
     fig=plt.figure()
     x=[i*VALIDATE_EVERY for i in range(len(list))]
     plt.plot(x,list)
-    fig.savefig('../../../saved_figures/test.png')
+    fig.savefig('../../../saved_figures/loss_graph_{}.png'.format(timestamp_now))
 # instantiate model
 
 model = ReformerLM(
