@@ -1,5 +1,5 @@
 from reformer_pytorch import ReformerLM
-from generative_tools import TrainingWrapper
+from reformer_pytorch.generative_tools import TrainingWrapper
 
 import random
 import tqdm
