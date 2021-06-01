@@ -39,7 +39,7 @@ def save_plot(list):
     fig=plt.figure()
     x=[i*VALIDATE_EVERY for i in range(len(list))]
     plt.plot(x,list)
-    fig.savefig('../../../test.png')
+    fig.savefig('../../../saved_figures/test.png')
 # instantiate model
 
 model = ReformerLM(
