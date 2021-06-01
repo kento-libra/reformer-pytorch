@@ -9,10 +9,11 @@ import torch
 import torch.optim as optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, Dataset
+import matplotlib.pyplot as plt
 
 # constants
 
-NUM_BATCHES = int(2e2)
+NUM_BATCHES = int(2e1)
 BATCH_SIZE = 8
 GRADIENT_ACCUMULATE_EVERY = 1
 LEARNING_RATE = 1e-4
@@ -20,7 +21,7 @@ VALIDATE_EVERY  = 10
 GENERATE_EVERY  = 10
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
-
+loss_list=[]
 # helpers
 
 def cycle(loader):
@@ -34,6 +35,11 @@ def decode_token(token):
 def decode_tokens(tokens):
     return ''.join(list(map(decode_token, tokens)))
 
+def save_plot(list):
+    fig=plt.figure()
+    x=[i for i in range(len(list))]
+    plt.plot(x,list)
+    fig.savefig('../test.png')
 # instantiate model
 
 model = ReformerLM(
@@ -99,13 +105,14 @@ for i in tqdm.tqdm(range(NUM_BATCHES), mininterval=10., desc='training'):
     optim.step()
     optim.zero_grad()
 
-    if (i+1) % VALIDATE_EVERY == 0:
+    if i % VALIDATE_EVERY == 0:
         model.eval()
         with torch.no_grad():
             loss = model(next(val_loader), return_loss = True)
             print(f'validation loss: {loss.item()}')
+            loss_list.append(loss.item())
 
-    if (i+1) % GENERATE_EVERY == 0:
+    if i % GENERATE_EVERY == 0:
         model.eval()
         inp = random.choice(val_dataset)[:-1]
         prime = decode_tokens(inp)
