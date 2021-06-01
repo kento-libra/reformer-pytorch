@@ -99,13 +99,13 @@ for i in tqdm.tqdm(range(NUM_BATCHES), mininterval=10., desc='training'):
     optim.step()
     optim.zero_grad()
 
-    if i+1 % VALIDATE_EVERY == 0:
+    if (i+1) % VALIDATE_EVERY == 0:
         model.eval()
         with torch.no_grad():
             loss = model(next(val_loader), return_loss = True)
             print(f'validation loss: {loss.item()}')
 
-    if i+1 % GENERATE_EVERY == 0:
+    if (i+1) % GENERATE_EVERY == 0:
         model.eval()
         inp = random.choice(val_dataset)[:-1]
         prime = decode_tokens(inp)
