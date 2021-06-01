@@ -15,6 +15,7 @@ timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
 NUM_BATCHES = int(2e2)
+HASHES = 8
 BATCH_SIZE = 8
 GRADIENT_ACCUMULATE_EVERY = 1
 LEARNING_RATE = 1e-4
@@ -40,7 +41,7 @@ def save_plot(list):
     fig=plt.figure()
     x=[i*VALIDATE_EVERY for i in range(len(list))]
     plt.plot(x,list)
-    fig.savefig('../../../saved_figures/loss_graph_{}.png'.format(timestamp_now))
+    fig.savefig('../../../saved_figures/loss_graph_hash={}_{}.png'.format(HASHES,timestamp_now))
 # instantiate model
 
 model = ReformerLM(
@@ -50,7 +51,7 @@ model = ReformerLM(
     num_tokens = 256,
     heads = 8,
     bucket_size = 64,
-    n_hashes = 4,
+    n_hashes = HASHES,
     ff_chunks = 10,
     lsh_dropout = 0.1,
     weight_tie = True,
