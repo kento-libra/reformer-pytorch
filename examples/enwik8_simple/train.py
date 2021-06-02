@@ -46,10 +46,10 @@ def save_plot(list):
 
 model = ReformerLM(
     dim = 128,
-    depth = 24,
+    depth = 12,
     max_seq_len = SEQ_LEN,
     num_tokens = 256,
-    heads = 16,
+    heads = 8,
     bucket_size = 64,
     n_hashes = HASHES,
     ff_chunks = 10,
