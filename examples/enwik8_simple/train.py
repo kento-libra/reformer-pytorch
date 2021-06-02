@@ -15,8 +15,8 @@ timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
 NUM_BATCHES = int(2e2)
-HASHES = 255
-BATCH_SIZE = 4
+HASHES = 2
+BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 2
 LEARNING_RATE = 1e-4
 VALIDATE_EVERY  = 2
@@ -46,10 +46,10 @@ def save_plot(list):
 
 model = ReformerLM(
     dim = 512,
-    depth = 8,
+    depth = 10,
     max_seq_len = SEQ_LEN,
     num_tokens = 256,
-    heads = 8,
+    heads = 12,
     bucket_size = 64,
     n_hashes = HASHES,
     ff_chunks = 10,
@@ -57,7 +57,7 @@ model = ReformerLM(
     weight_tie = True,
     causal = True,
     n_local_attn_heads = 4,
-    use_full_attn = True # set this to true for comparison with full attention
+    use_full_attn = False # set this to true for comparison with full attention
 )
 
 model = TrainingWrapper(model)
