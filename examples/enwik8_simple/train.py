@@ -15,7 +15,7 @@ timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
 NUM_BATCHES = int(2e2)
-HASHES = 2
+HASHES = 4
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 2
 LEARNING_RATE = 1e-4
