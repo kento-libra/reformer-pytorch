@@ -46,8 +46,8 @@ def save_plot(list):
 # instantiate model
 
 model = ReformerLM(
-    dim = 2048,
-    depth = 6,
+    dim = 512,
+    depth = 4,
     max_seq_len = SEQ_LEN,
     num_tokens = 256,
     heads = 4,
