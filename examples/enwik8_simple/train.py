@@ -15,7 +15,7 @@ timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
 NUM_BATCHES = int(2e2)
-HASHES = 16
+HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 2
 LEARNING_RATE = 1e-4
@@ -46,8 +46,8 @@ def save_plot(list):
 # instantiate model
 
 model = ReformerLM(
-    dim = 128,
-    depth = 2,
+    dim = 512,
+    depth = 4,
     max_seq_len = SEQ_LEN,
     num_tokens = 256,
     heads = 4,
