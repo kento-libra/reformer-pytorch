@@ -47,17 +47,17 @@ def save_plot(list):
 
 model = ReformerLM(
     dim = 2048,
-    depth = 2,
+    depth = 6,
     max_seq_len = SEQ_LEN,
     num_tokens = 256,
-    heads = 2,
+    heads = 4,
     bucket_size = 64,
     n_hashes = HASHES,
     ff_chunks = 10,
     lsh_dropout = 0.1,
     weight_tie = True,
     causal = True,
-    n_local_attn_heads = 1,
+    n_local_attn_heads = 2,
     use_full_attn = False # set this to true for comparison with full attention
 )
 
