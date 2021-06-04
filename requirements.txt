@@ -3,3 +3,4 @@ einops
 local-attention
 product-key-memory
 axial-positional-embedding>=0.1.0
+kmeans-pytorch

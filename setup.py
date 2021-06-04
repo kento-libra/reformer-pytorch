@@ -9,7 +9,8 @@ setup(
     'einops',
     'local-attention',
     'product-key-memory',
-    'torch'
+    'torch',
+    'pykeops'
   ],
   classifiers=[
     'Development Status :: 4 - Beta',
