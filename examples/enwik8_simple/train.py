@@ -47,7 +47,7 @@ def save_plot(list):
 
 model = ReformerLM(
     dim = 512,
-    depth = 4,
+    depth = 2,
     max_seq_len = SEQ_LEN,
     num_tokens = 256,
     heads = 4,
