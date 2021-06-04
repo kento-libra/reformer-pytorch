@@ -101,7 +101,7 @@ def split_at_index(dim, index, t):
     l = (*pre_slices, slice(None, index))
     r = (*pre_slices, slice(index, None))
     return t[l], t[r]
-"""
+
 def KMeans_cosine(x, K=10, Niter=10, verbose=False):
     #Implements Lloyd's algorithm for the Cosine similarity metric.
 
@@ -148,7 +148,7 @@ def KMeans_cosine(x, K=10, Niter=10, verbose=False):
 
     return cl, c
 # helper classes
-"""
+
 class MatrixMultiply(nn.Module):
     def __init__(self, tensor, transpose = False, normalize = False):
         super().__init__()
