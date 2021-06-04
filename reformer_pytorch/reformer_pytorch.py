@@ -103,7 +103,7 @@ def split_at_index(dim, index, t):
     return t[l], t[r]
 """
 def KMeans_cosine(x, K=10, Niter=10, verbose=False):
-    """Implements Lloyd's algorithm for the Cosine similarity metric."""
+    #Implements Lloyd's algorithm for the Cosine similarity metric.
 
     start = time.time()
     N, D = x.shape  # Number of samples, dimension of the ambient space
