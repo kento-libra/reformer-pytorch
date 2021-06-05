@@ -509,7 +509,7 @@ class KMAttention(nn.Module):
         self._cache = {}
 
     @cache_method_decorator('_cache', 'buckets', reexecute=True)
-    def hash_vectors(n_buckets, vecs):
+    def hash_vectors(self,n_buckets, vecs):
 
         batch_size = vecs.shape[0]
         device = vecs.device
