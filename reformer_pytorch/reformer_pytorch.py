@@ -468,7 +468,7 @@ class LSHAttention(nn.Module):
         # return output, attention matrix, and bucket distribution
         return out, attn, buckets
 
-
+#added by kento-libra
 class KMAttention(nn.Module):
     def __init__( self,
                   dropout = 0.,
@@ -509,44 +509,19 @@ class KMAttention(nn.Module):
         self._cache = {}
 
     @cache_method_decorator('_cache', 'buckets', reexecute=True)
-    def hash_vectors(self, n_buckets, vecs):
+    def hash_vectors(n_buckets, vecs):
+
         batch_size = vecs.shape[0]
         device = vecs.device
 
-        # See https://arxiv.org/pdf/1509.02897.pdf
-        # We sample a different random rotation for each round of hashing to
-        # decrease the probability of hash misses.
         assert n_buckets % 2 == 0
 
-        rot_size = n_buckets
+        dropped_vecs = dropout_for_hash(vecs)
 
-        rotations_shape = (
-            batch_size if self._random_rotations_per_head else 1,
-            vecs.shape[-1],
-            self.n_hashes if self._rehash_each_round else 1,
-            rot_size // 2)
-
-        random_rotations = torch.randn(rotations_shape, dtype=vecs.dtype, device=device).expand(batch_size, -1, -1, -1)
-
-        dropped_vecs = self.dropout_for_hash(vecs)
-        rotated_vecs = torch.einsum('btf,bfhi->bhti', dropped_vecs, random_rotations)
-
-        if self._rehash_each_round:
-            # rotated_vectors size [batch,n_hash,seq_len,buckets]
-            rotated_vecs = torch.cat([rotated_vecs, -rotated_vecs], dim=-1)
-            buckets = torch.argmax(rotated_vecs, dim=-1)
-        else:
-            rotated_vecs = torch.cat([rotated_vecs, -rotated_vecs], dim=-1)
-            # In this configuration, we map each item to the top self.n_hashes buckets
-            rotated_vecs = torch.squeeze(rotated_vecs, 1)
-            bucket_range = torch.arange(rotated_vecs.shape[-1], device=device)
-            bucket_range = torch.reshape(bucket_range, (1, -1))
-            bucket_range = bucket_range.expand_as(rotated_vecs)
-
-            _, buckets = sort_key_val(rotated_vecs, bucket_range, dim=-1)
-            # buckets size [batch size, seq_len, buckets]
-            buckets = buckets[... , -self.n_hashes:].transpose(1, 2)
-
+        buckets=torch.zeros(0,self.n_hashes,vecs.shape[1],device=device)
+        for i in range(int(batch_size)):
+          buckets=torch.cat([buckets,KMeans_cosine(dropped_vecs[i],n_buckets).expand(1,self.n_hashes,vecs.shape[1])],dim=0)
+        #print(buckets)
         # buckets is now (self.n_hashes, seq_len). Next we add offsets so that
         # bucket numbers from different hashing rounds don't overlap.
         offsets = torch.arange(self.n_hashes, device=device)
@@ -794,7 +769,12 @@ class LSHSelfAttention(nn.Module):
         self.to_out = nn.Linear(dim_heads, dim)
 
         self.bucket_size = bucket_size
-        self.lsh_attn = LSHAttention(bucket_size=bucket_size, n_hashes=n_hashes, causal=causal, random_rotations_per_head=random_rotations_per_head, attend_across_buckets = attend_across_buckets,  allow_duplicate_attention = allow_duplicate_attention, return_attn = return_attn, dropout = dropout, **kwargs)
+
+
+        #self.lsh_attn = LSHAttention(bucket_size=bucket_size, n_hashes=n_hashes, causal=causal, random_rotations_per_head=random_rotations_per_head, attend_across_buckets = attend_across_buckets,  allow_duplicate_attention = allow_duplicate_attention, return_attn = return_attn, dropout = dropout, **kwargs)
+        self.lsh_attn = KMAttention(bucket_size=bucket_size, n_hashes=n_hashes, causal=causal, random_rotations_per_head=random_rotations_per_head, attend_across_buckets = attend_across_buckets,  allow_duplicate_attention = allow_duplicate_attention, return_attn = return_attn, dropout = dropout, **kwargs)
+
+
         self.full_attn = FullQKAttention(causal=causal, dropout=dropout)
         self.post_attn_dropout = nn.Dropout(post_attn_dropout)
 
