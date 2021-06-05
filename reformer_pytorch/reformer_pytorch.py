@@ -468,7 +468,7 @@ class LSHAttention(nn.Module):
         # return output, attention matrix, and bucket distribution
         return out, attn, buckets
 
-#added by kento-libra
+#modified by kento-libra
 class KMAttention(nn.Module):
     def __init__( self,
                   dropout = 0.,
@@ -516,7 +516,7 @@ class KMAttention(nn.Module):
 
         assert n_buckets % 2 == 0
 
-        dropped_vecs = dropout_for_hash(vecs)
+        dropped_vecs = self.dropout_for_hash(vecs)
 
         buckets=torch.zeros(0,self.n_hashes,vecs.shape[1],device=device)
         for i in range(int(batch_size)):
