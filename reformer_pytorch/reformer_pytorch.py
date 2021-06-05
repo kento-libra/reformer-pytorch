@@ -253,7 +253,7 @@ class LSHAttention(nn.Module):
     def hash_vectors(self, n_buckets, vecs):
         batch_size = vecs.shape[0]
         device = vecs.device
-        print(vecs.shape)
+        #print(vecs.shape)
         # See https://arxiv.org/pdf/1509.02897.pdf
         # We sample a different random rotation for each round of hashing to
         # decrease the probability of hash misses.
