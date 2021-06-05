@@ -516,7 +516,7 @@ class KMAttention(nn.Module):
 
         assert n_buckets % 2 == 0
 
-        dropped_vecs = self.dropout_for_hash(vecs)
+        dropped_vecs = self.dropout_for_hash(vecs).contiguous()
         print(vecs)
         buckets=torch.zeros(0,self.n_hashes,vecs.shape[1],device=device)
         for i in range(int(batch_size)):
