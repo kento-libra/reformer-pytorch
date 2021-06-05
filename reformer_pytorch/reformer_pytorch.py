@@ -146,7 +146,7 @@ def KMeans_cosine(x, K=10, Niter=10, verbose=False):
             )
         )
 
-    return cl, c
+    return cl
 # helper classes
 
 class MatrixMultiply(nn.Module):
