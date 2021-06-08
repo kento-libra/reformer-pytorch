@@ -58,7 +58,7 @@ model = ReformerLM(
     weight_tie = True,
     causal = True,
     n_local_attn_heads = 2,
-    use_full_attn = False # set this to true for comparison with full attention
+    use_full_attn = True # set this to true for comparison with full attention
 )
 
 model = TrainingWrapper(model)
