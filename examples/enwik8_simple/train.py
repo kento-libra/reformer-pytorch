@@ -23,6 +23,7 @@ VALIDATE_EVERY  = 5
 GENERATE_EVERY  = 10
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
+# KM or RND or LSH
 atn_mode='LSH'
 loss_list=[]
 # helpers
@@ -59,7 +60,7 @@ model = ReformerLM(
     weight_tie = True,
     causal = True,
     n_local_attn_heads = 2,
-    use_full_attn = False # set this to true for comparison with full attention
+    use_full_attn = False, # set this to true for comparison with full attention
     atn_mode=atn_mode
 )
 
