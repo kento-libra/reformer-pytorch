@@ -16,7 +16,7 @@ timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
 NUM_BATCHES = int(5e3)
-HASHES = 1
+HASHES = 2
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
 LEARNING_RATE = 1e-4
@@ -25,7 +25,7 @@ GENERATE_EVERY  = 100
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
 # KM or RND or LSH
-atn_mode='RND'
+atn_mode='LSH'
 loss_list=[]
 # helpers
 
