@@ -15,7 +15,7 @@ import pickle
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
-NUM_BATCHES = int(1e1)
+NUM_BATCHES = int(5e3)
 HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
@@ -46,7 +46,7 @@ def save_plot(list):
     plt.plot(x,list)
     plt.ylim([2.5,5])
     fig.savefig('../../../saved_figures/loss_graph_{}_hash={}_{}.png'.format(atn_mode,HASHES,timestamp_now))
-    with open('../../../loss_{}_hash={}.pickle'.format(atn_mode,HASHES), 'wb') as f:
+    with open('../../../saved_figures/loss_{}_hash={}.pickle'.format(atn_mode,HASHES), 'wb') as f:
         pickle.dump(list, f)
 # instantiate model
 
