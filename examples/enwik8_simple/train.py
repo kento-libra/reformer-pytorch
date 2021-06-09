@@ -14,7 +14,7 @@ import datetime
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
-NUM_BATCHES = int(3e3)
+NUM_BATCHES = int(1e2)
 HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
@@ -23,6 +23,7 @@ VALIDATE_EVERY  = 5
 GENERATE_EVERY  = 10
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
+atn_mode='LSH'
 loss_list=[]
 # helpers
 
@@ -42,7 +43,7 @@ def save_plot(list):
     x=[i*VALIDATE_EVERY for i in range(len(list))]
     plt.plot(x,list)
     plt.ylim([2.5,5])
-    fig.savefig('../../../saved_figures/loss_graph_hash={}_{}.png'.format(HASHES,timestamp_now))
+    fig.savefig('../../../saved_figures/loss_graph_{}_hash={}_{}.png'.format(atn_mode,HASHES,timestamp_now))
 # instantiate model
 
 model = ReformerLM(
@@ -59,6 +60,7 @@ model = ReformerLM(
     causal = True,
     n_local_attn_heads = 2,
     use_full_attn = False # set this to true for comparison with full attention
+    atn_mode=atn_mode
 )
 
 model = TrainingWrapper(model)
