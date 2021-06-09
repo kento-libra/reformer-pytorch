@@ -14,11 +14,11 @@ import datetime
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
-NUM_BATCHES = int(2e2)
+NUM_BATCHES = int(1e4)
 HASHES = 1
 BATCH_SIZE = 2
-GRADIENT_ACCUMULATE_EVERY = 2
-LEARNING_RATE = 1e-5
+GRADIENT_ACCUMULATE_EVERY = 4
+LEARNING_RATE = 1e-4
 VALIDATE_EVERY  = 5
 GENERATE_EVERY  = 10
 GENERATE_LENGTH = 512
