@@ -11,6 +11,7 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader, Dataset
 import matplotlib.pyplot as plt
 import datetime
+import pickle
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
@@ -19,7 +20,7 @@ HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
 LEARNING_RATE = 1e-4
-VALIDATE_EVERY  = 5
+VALIDATE_EVERY  = 10
 GENERATE_EVERY  = 10
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
@@ -45,6 +46,8 @@ def save_plot(list):
     plt.plot(x,list)
     plt.ylim([2.5,5])
     fig.savefig('../../../saved_figures/loss_graph_{}_hash={}_{}.png'.format(atn_mode,HASHES,timestamp_now))
+    with open('loss_{}_hash={}.pickle'.format(atn_mode,HASHES), 'wb') as f:
+        pickle.dump(list, f)
 # instantiate model
 
 model = ReformerLM(
