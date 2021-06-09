@@ -25,7 +25,7 @@ GENERATE_EVERY  = 100
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
 # KM or RND or LSH
-atn_mode='LSH'
+atn_mode='KM'
 loss_list=[]
 # helpers
 
@@ -44,7 +44,7 @@ def save_plot(list):
     fig=plt.figure()
     x=[i*VALIDATE_EVERY for i in range(len(list))]
     plt.plot(x,list)
-    plt.ylim([2.5,5])
+    plt.ylim([1.5,3.0])
     fig.savefig('../../../saved_figures/loss_graph_{}_hash={}_{}.png'.format(atn_mode,HASHES,timestamp_now))
     with open('../../../saved_figures/loss_{}_hash={}.pickle'.format(atn_mode,HASHES), 'wb') as f:
         pickle.dump(list, f)
