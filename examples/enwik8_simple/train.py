@@ -15,7 +15,7 @@ import pickle
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
-NUM_BATCHES = int(5e3)
+NUM_BATCHES = int(2e4)
 HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
@@ -51,8 +51,8 @@ def save_plot(list):
 # instantiate model
 
 model = ReformerLM(
-    dim = 256,
-    depth = 3,
+    dim = 512,
+    depth = 4,
     max_seq_len = SEQ_LEN,
     num_tokens = 256,
     heads = 4,
