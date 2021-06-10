@@ -25,7 +25,7 @@ GENERATE_EVERY  = 100
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
 # KM or RND or LSH
-atn_mode='KM'
+atn_mode='RND'
 loss_list=[]
 # helpers
 
