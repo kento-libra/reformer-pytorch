@@ -15,7 +15,7 @@ import pickle
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
-NUM_BATCHES = int(1e5)
+NUM_BATCHES = int(2e4)
 HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
