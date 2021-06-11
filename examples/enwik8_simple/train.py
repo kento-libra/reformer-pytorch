@@ -15,7 +15,7 @@ import pickle
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
-NUM_BATCHES = int(2e4)
+NUM_BATCHES = int(1e3)
 HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
@@ -25,7 +25,7 @@ GENERATE_EVERY  = 100
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
 # KM or RND or LSH
-atn_mode='RND'
+atn_mode='FULL'
 loss_list=[]
 # helpers
 
@@ -63,7 +63,7 @@ model = ReformerLM(
     weight_tie = True,
     causal = True,
     n_local_attn_heads = 2,
-    use_full_attn = False, # set this to true for comparison with full attention
+    use_full_attn = True, # set this to true for comparison with full attention
     atn_mode=atn_mode
 )
 
