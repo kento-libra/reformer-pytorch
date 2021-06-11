@@ -7,6 +7,7 @@ import gzip
 import numpy as np
 import torch
 import torch.optim as optim
+import torchvision
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, Dataset
 import matplotlib.pyplot as plt
@@ -15,7 +16,7 @@ import pickle
 timestamp_now=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 # constants
 
-NUM_BATCHES = int(5e3)
+NUM_BATCHES = int(1e3)
 HASHES = 1
 BATCH_SIZE = 2
 GRADIENT_ACCUMULATE_EVERY = 4
@@ -25,7 +26,7 @@ GENERATE_EVERY  = 100
 GENERATE_LENGTH = 512
 SEQ_LEN = 4096
 # KM or RND or LSH
-atn_mode='FULL'
+atn_mode='LSH'
 loss_list=[]
 # helpers
 
@@ -72,10 +73,15 @@ model.cuda()
 
 # prepare enwik8 data
 
-with gzip.open('./data/enwik8.gz') as file:
-    X = np.fromstring(file.read(int(95e6)), dtype=np.uint8)
-    trX, vaX = np.split(X, [int(90e6)])
-    data_train, data_val = torch.from_numpy(trX), torch.from_numpy(vaX)
+# with gzip.open('./data/enwik8.gz') as file:
+#     X = np.fromstring(file.read(int(95e6)), dtype=np.uint8)
+#     trX, vaX = np.split(X, [int(90e6)])
+#     data_train, data_val = torch.from_numpy(trX), torch.from_numpy(vaX)
+trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True)
+testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True)
+trX=np.mean(trainset.data, axis=3,dtype='int').flatten()
+vaX=np.mean(testset.data, axis=3,dtype='int').flatten()
+data_train, data_val = torch.from_numpy(trX), torch.from_numpy(vaX)
 print(data_train.shape)
 class TextSamplerDataset(Dataset):
     def __init__(self, data, seq_len):
