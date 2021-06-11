@@ -24,7 +24,7 @@ LEARNING_RATE = 1e-4
 VALIDATE_EVERY  = 50
 GENERATE_EVERY  = 100
 GENERATE_LENGTH = 512
-SEQ_LEN = 4096
+SEQ_LEN = 1024
 # KM or RND or LSH
 atn_mode='LSH'
 loss_list=[]
@@ -65,7 +65,7 @@ model = ReformerLM(
     causal = True,
     n_local_attn_heads = 2,
     full_attn_thres = 0,
-    use_full_attn = True, # set this to true for comparison with full attention
+    use_full_attn = False, # set this to true for comparison with full attention
     atn_mode=atn_mode
 )
 
@@ -78,8 +78,8 @@ model.cuda()
 #     X = np.fromstring(file.read(int(95e6)), dtype=np.uint8)
 #     trX, vaX = np.split(X, [int(90e6)])
 #     data_train, data_val = torch.from_numpy(trX), torch.from_numpy(vaX)
-trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True)
-testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True)
+trainset = torchvision.datasets.CIFAR10(root='/content/gdrive/My Drive/Reformer/dataset', train=True, download=True)
+testset = torchvision.datasets.CIFAR10(root='/content/gdrive/My Drive/Reformer/dataset', train=False, download=True)
 trX=np.mean(trainset.data, axis=3,dtype='int').flatten()
 vaX=np.mean(testset.data, axis=3,dtype='int').flatten()
 data_train, data_val = torch.from_numpy(trX), torch.from_numpy(vaX)
