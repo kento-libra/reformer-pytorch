@@ -26,7 +26,7 @@ GENERATE_EVERY  = 100
 GENERATE_LENGTH = 512
 SEQ_LEN = 1024
 # KM or RND or LSH
-atn_mode='KM'
+atn_mode='FULL'
 loss_list=[]
 # helpers
 
@@ -65,7 +65,7 @@ model = ReformerLM(
     causal = True,
     n_local_attn_heads = 2,
     full_attn_thres = 0,
-    use_full_attn = False, # set this to true for comparison with full attention
+    use_full_attn = (atn_mode is 'FULL'), # set this to true for comparison with full attention
     atn_mode=atn_mode
 )
 
